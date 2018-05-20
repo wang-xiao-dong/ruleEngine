@@ -1,0 +1,7 @@
+---
+name: group rule
+description: 充电站规则
+priority: 9
+condition: "orderInfo.getCompanyId().equals(1) && orderInfo.getIsRajaUser()"
+actions:
+  - "orderInfo.setPrice(orderInfo.getPrice().multiply(BigDecimal.valueOf(0.9)));"

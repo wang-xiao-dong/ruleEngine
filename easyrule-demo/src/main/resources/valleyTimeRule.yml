@@ -1,0 +1,7 @@
+---
+name: valley time rule
+description: 谷值时间充电规则
+priority: 1
+condition: "orderInfo.getStartTime().getTime()>=startRange && orderInfo.getEndTime().getTime()<=endRange"
+actions:
+  - "orderInfo.setPrice(ElectricityPriceRange.VALLEY_SECOND.getPrice().multiply(orderInfo.getElectricity()));"

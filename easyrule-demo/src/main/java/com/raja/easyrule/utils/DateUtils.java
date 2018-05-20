@@ -103,4 +103,12 @@ public class DateUtils {
         }
         return calendar.getTime();
     }
+
+    //传入的字符串格式为小时：分：09:30,拼上传入date的年月日，作为新日期返回
+    public static Date string2Date(String dateStr,Date date){
+        String[] arr = dateStr.split(":");
+        Integer hour = Integer.parseInt(arr[0]);//会自动去掉第一个0，比如09
+        Integer minute = Integer.parseInt(arr[1]);
+        return DateUtils.getDawnPlusTime(date,hour,minute);
+    }
 }

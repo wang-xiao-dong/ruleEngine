@@ -1,0 +1,7 @@
+---
+name: empty time rule
+description: 空规则
+priority: 15
+condition: "true"
+actions:
+  - ""
