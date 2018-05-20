@@ -1,13 +1,12 @@
-package com.secbro.drools.model;
+package com.raja.drools.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-//import javax.persistence.Column;
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
 import java.io.Serializable;
-
+/**
+ * Created by WXD on 2018/5/18.
+ * 定义规则实体，可将规则文件以大文本的格式，存在数据库，动态加载
+ */
 //@Entity
 public class Rule implements Serializable {
 

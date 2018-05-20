@@ -1,7 +1,0 @@
-package plausibcheck.adress
-rule "Postcode should be filled with exactly 5 numbers"
-
-    when
-    then
-		System.out.println("logs in rule ：check success!");
-end
