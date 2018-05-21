@@ -1,0 +1,46 @@
+package com.rules
+
+import com.raja.drools.model.OrderFormInfo
+import java.math.BigDecimal
+import com.raja.drools.utils.DateUtils
+import com.raja.drools.enums.ElectricityPriceRange
+import java.util.Map
+
+    //峰值充电区间规则
+    rule "peakTime-rule"
+        salience 1
+        no-loop true
+        when
+            $range : Map()
+            $orderInfo : OrderFormInfo(getStartTime().getTime() > (Long)$range.get("startPeakRange") &&  getEndTime().getTime()  < (Long)$range.get("endPeakRange"))
+        then
+            $orderInfo.setPrice($orderInfo.getElectricity().multiply((BigDecimal) $range.get("peakRangePrice")));
+            System.err.println("满足峰值充电规则-重加载");
+        end
+
+    //谷值充电区间
+    rule "valleyTime-rule"
+        salience 2
+        no-loop true
+        when
+            $range : Map()
+            $orderInfo : OrderFormInfo(getStartTime().getTime()  > (Long)$range.get("startValleyRange")
+                          &&  getEndTime().getTime()  < (Long)$range.get("endValleyRange"))
+        then
+    		$orderInfo.setPrice($orderInfo.getElectricity().multiply((BigDecimal) $range.get("valleyRangePrice")));
+    		System.err.println("满足谷值充电规则-重加载");
+
+        end
+
+    //充电站规则，所属公司ID为1，雅俊用户的车辆充电优惠0.9
+        rule "group-rule"
+            salience 0
+            no-loop true
+            when
+                $orderInfo : OrderFormInfo(getCompanyId().equals(1) &&  getIsRajaUser())
+            then
+                $orderInfo.setPrice($orderInfo.getPrice().multiply(BigDecimal.valueOf(0.8)));
+                 System.err.println("满足充电站优惠规则-重加载");
+            end
+
+

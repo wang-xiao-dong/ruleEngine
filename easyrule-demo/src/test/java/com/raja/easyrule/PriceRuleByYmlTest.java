@@ -1,6 +1,7 @@
 package com.raja.easyrule;
 
 import com.raja.easyrule.RuleGroup.ConditionalRuleGroupPriceRule;
+import com.raja.easyrule.enums.ElectricityPriceRange;
 import com.raja.easyrule.po.OrderFormInfo;
 import com.raja.easyrule.utils.DateUtils;
 import org.jeasy.rules.api.Facts;
@@ -37,10 +38,22 @@ public class PriceRuleByYmlTest {
         orderFormInfo.setIsRajaUser(true);
         orderFormInfo.setOrderId("order1");
         orderFormInfo.setUserGrade(1);
-        orderFormInfo.setPrice(BigDecimal.ONE);
+        orderFormInfo.setPrice(BigDecimal.ZERO);
 
         Facts facts = new Facts();
         facts.put("orderInfo", orderFormInfo);
+
+        long startPeakRange = DateUtils.getDawnPlusTime(orderFormInfo.getEndTime(), ElectricityPriceRange.PEAK_ONE.getStart(),0).getTime();
+        long endPeakRange = DateUtils.getDawnPlusTime(orderFormInfo.getEndTime(),ElectricityPriceRange.PEAK_ONE.getEnd(),0).getTime();
+        long startValleyRange = DateUtils.getDawnPlusTime(orderFormInfo.getEndTime(), ElectricityPriceRange.VALLEY_SECOND.getStart(),0).getTime();
+        long endValleyRange = DateUtils.getDawnPlusTime(orderFormInfo.getEndTime(),ElectricityPriceRange.VALLEY_SECOND.getEnd(),0).getTime();
+        facts.put("startPeakRange", startPeakRange);
+        facts.put("endPeakRange", endPeakRange);
+        facts.put("startValleyRange", startValleyRange);
+        facts.put("endValleyRange", endValleyRange);
+        facts.put("peakPrice", ElectricityPriceRange.PEAK_ONE.getPrice());
+        facts.put("valleyPrice", ElectricityPriceRange.PEAK_ONE.getPrice());
+        facts.put("groupPrice", BigDecimal.valueOf(0.9));
         // create rules
         Rule groupRule = MVELRuleFactory.createRuleFrom(new FileReader(ResourceUtils.getFile("classpath:groupRule.yml")));
         Rule peakRule = MVELRuleFactory.createRuleFrom(new FileReader(ResourceUtils.getFile("classpath:peakTimeRule.yml")));
