@@ -33,8 +33,8 @@ public class PriceRuleByYmlTest {
         orderFormInfo.setCompanyId(1);
         orderFormInfo.setGroupId(1);
         orderFormInfo.setElectricity(BigDecimal.valueOf(5));
-        orderFormInfo.setStartTime(DateUtils.getDawnPlusTime(new Date(),8,0));
-        orderFormInfo.setEndTime(DateUtils.getDawnPlusTime(new Date(),12,0));
+        orderFormInfo.setStartTime(DateUtils.getDawnPlusTime(new Date(),1,0));
+        orderFormInfo.setEndTime(DateUtils.getDawnPlusTime(new Date(),6,0));
         orderFormInfo.setIsRajaUser(true);
         orderFormInfo.setOrderId("order1");
         orderFormInfo.setUserGrade(1);
