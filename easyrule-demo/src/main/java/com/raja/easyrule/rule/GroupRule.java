@@ -32,7 +32,6 @@ public class GroupRule {
     @Action(order = 1)
     public void then(@Fact("orderInfo") OrderFormInfo orderInfo) throws Exception {
         orderInfo.setPrice(orderInfo.getPrice().multiply(BigDecimal.valueOf(0.9)));
-        System.err.println("===="+orderInfo.getPrice());
     }
 
     @Action(order = 2)

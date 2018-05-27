@@ -34,20 +34,21 @@ public class ReloadDroolsRules {
         KieFileSystem kfs = kieServices.newKieFileSystem();
         //将新的规则文件写进一个临时文件中，规则每次从临时文件加载
         kfs.write("src/main/resources/rules/temp.drl", loadRules());
+        //kfs.write("classpath:price3.drl", loadRules());
         KieBuilder kieBuilder = kieServices.newKieBuilder(kfs).buildAll();
         Results results = kieBuilder.getResults();
         if (results.hasMessages(Message.Level.ERROR)) {
             throw new IllegalStateException("规则检验失败："+results.getMessages());
         }
         KieUtils.setKieContainer(kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId()));
-        log.info("新规则重新加载成功");
+        log.info("新规则重新加载成功！");
     }
 
     private String loadRules() throws IOException {
         // 从数据库加载的规则
 //        return "package plausibcheck.adress\n\n rule \"Postcode 6 numbers\"\n\n    when\n  then\n        System.out.println(\"规则2中打印日志：校验通过!\");\n end";
         //从文本获取内容
-        return IOUtils.toString(resourceLoader.getResource("classpath:resources/price.txt").getInputStream());
+        return IOUtils.toString(resourceLoader.getResource("classpath:price2.drl").getInputStream());
 //       return  ResourceUtils.getFile("classpath:rules/price.drl").toString();
     }
 
